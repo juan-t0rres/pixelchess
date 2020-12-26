@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <meta charset="utf-8" />
+    <style>
+      @font-face {
+        font-family: "04b30";
+        src: url("04b_30__-webfont.woff2") format("woff2"),
+          url("04b_30__-webfont.woff") format("woff");
+        font-weight: normal;
+        font-style: normal;
+      }
+      body {
+        text-align: center;
+        background-color: #242424;
+        color: white;
+      }
+      .title {
+        margin-top: 4rem;
+        font-family: "04b30";
+        color: #ffd104;
+      }
+      .room-input {
+        height: 35px;
+      }
+      h4 {
+        font-family: "04b30";
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <h1 class="title">pixelchess</h1>
+      <p>Quickly and easily play chess with a friend.</p>
+      <div class="row g-3 justify-content-center align-items-center mb-3">
+        <div class="col-auto">
+          <input class="room-input" />
+        </div>
+        <div class="col-auto">
+          <button id="join-button" type="button" class="btn btn-light">Join Room</button>
+        </div>
+      </div>
+      <button id="create-button" type="button" class="btn btn-light">Create a Room</button>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

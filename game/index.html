@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/addons/p5.dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/addons/p5.sound.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"></script>
+    <script src="Square.js"></script>
+    <script src="Piece.js"></script>
+    <script src="pieces/King.js"></script>
+    <script src="pieces/Pawn.js"></script>
+    <script src="pieces/Queen.js"></script>
+    <script src="pieces/Rook.js"></script>
+    <script src="pieces/Knight.js"></script>
+    <script src="pieces/Bishop.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <meta charset="utf-8" />
+    <style>
+      @font-face {
+        font-family: "04b30";
+        src: url("04b_30__-webfont.woff2") format("woff2"),
+          url("04b_30__-webfont.woff") format("woff");
+        font-weight: normal;
+        font-style: normal;
+      }
+      body {
+        text-align: center;
+        background-color: #242424;
+      }
+      canvas {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 2rem;
+        padding: 2px;
+        width: 512px;
+        border: 3px solid #ffd104;
+      }
+      .title {
+        margin-top: 4rem;
+        font-family: "04b30";
+        color: #ffd104;
+      }
+      h4 {
+        color: white;
+        font-family: "04b30";
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <h1 class="title">pixelchess</h1>
+      <h4 class="msg"></h4>
+      <script src="chess.js"></script>
+    </div>
+  </body>
+</html>
