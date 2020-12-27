@@ -48,12 +48,14 @@ class Pawn extends Piece {
       // can't go more than 2 spaces forwards
       if (dy > 2) return false;
       // can only go 2 spaces if you haven't moved pawn yet and you're not jumping over a piece
-      if (dy === 2 && (currY !== 6 || board[newX][newY + 1].piece)) return false;
+      if (dy === 2 && (currY !== 6 || board[newX][newY + 1].piece))
+        return false;
     } else {
       // same as above but for black
       if (dy > 0) return false;
       if (dy < -2) return false;
-      if (dy === -2 && (currY !== 1 || board[newX][newY - 1].piece)) return false;
+      if (dy === -2 && (currY !== 1 || board[newX][newY - 1].piece))
+        return false;
     }
 
     // can't capture without going diagonal

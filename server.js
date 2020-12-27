@@ -99,6 +99,14 @@ socket.on("connection", (socket) => {
     socket.to(room).emit("move", move);
   });
 
+  socket.on("promotion", (promotion) => {
+    const { prevX, prevY, newX, newY, newPiece } = promotion;
+    rooms[room].board[newY][newX] = newPiece;
+    rooms[room].board[prevY][prevX] = null;
+    rooms[room].turn++;
+    socket.to(room).emit("promotion", promotion);
+  });
+
   socket.on("gameOver", () => {
     delete rooms[room];
   });

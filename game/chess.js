@@ -22,6 +22,7 @@ let black_pawn, black_rook, black_knight, black_bishop, black_queen, black_king;
 const classes = { Pawn, Rook, Knight, Bishop, Queen, King };
 
 socket.on("move", (move) => updateBoard(move));
+socket.on("promotion", (promotion) => getPromotion(promotion))
 socket.emit("login", uid);
 socket.on("setup", (setupInfo) => {
   color = setupInfo.color;
@@ -97,6 +98,26 @@ function sendMove(prevX, prevY, newX, newY, castle) {
   socket.emit("move", { prevX, prevY, newX, newY, castle });
 }
 
+function getPromotion(promotion) {
+  const { prevX, prevY, newX, newY, newPiece } = promotion;
+  board[prevX][prevY].piece = null;
+  const split = newPiece.split(" ");
+  const pieceColor = split[0];
+  const pieceName = split[1];
+  const pieceClass = classes[pieceName];
+  board[newX][newY].piece = new pieceClass(pieceColor === "white");
+  turn++;
+  document.querySelector(".msg").innerHTML =
+    turn % 2 === 0 ? "white's turn" : "black's turn";
+}
+
+function sendPromotion(prevX, prevY, newX, newY, newPiece) {
+  selected = null;
+  document.querySelector(".msg").innerHTML =
+    turn % 2 === 0 ? "white's turn" : "black's turn";
+  socket.emit("promotion", { prevX, prevY, newX, newY, newPiece });
+}
+
 function mouseClicked(event) {
   if (event.target.className !== "p5Canvas") return;
   if (event.offsetX > SIZE || event.offsetY > SIZE) return;
@@ -145,6 +166,14 @@ function mouseClicked(event) {
         return;
       }
       const color = selectedPiece.color;
+
+      // check for pawn promotion
+      if (selectedPiece.constructor.name === "Pawn" && (y === 0 || y === 7)) {
+        pawnPromotion(selected.x, selected.y, x, y);
+        checkGameOver(color === "white" ? "black" : "white");
+        return;
+      }
+
       selectedPiece.makeMove(selected.x, selected.y, x, y);
       turn++;
       sendMove(selected.x, selected.y, x, y);
@@ -192,6 +221,38 @@ function tryCastle(kingX, kingY, rookX, rookY) {
     sendMove(rookX, rookY, 3, rookY, true);
   }
   selected = null;
+}
+
+function pawnPromotion(currX, currY, newX, newY) {
+  const pieceColor = board[currX][currY].piece.color;
+  board[newX][newY].piece = board[currX][currY].piece;
+  board[currX][currY].piece = null;
+  const promoteDiv = document.querySelector(".promote");
+  promoteDiv.style.display = "";
+  document.querySelector("#queen-btn").addEventListener("click", () => {
+    board[newX][newY].piece = new Queen(pieceColor === "white");
+    promoteDiv.style.display = "none";
+    turn++;
+    sendPromotion(currX, currY, newX, newY, pieceColor + " Queen");
+  });
+  document.querySelector("#knight-btn").addEventListener("click", () => {
+    board[newX][newY].piece = new Knight(pieceColor === "white");
+    promoteDiv.style.display = "none";
+    turn++;
+    sendPromotion(currX, currY, newX, newY, pieceColor + " Knight");
+  });
+  document.querySelector("#rook-btn").addEventListener("click", () => {
+    board[newX][newY].piece = new Rook(pieceColor === "white");
+    promoteDiv.style.display = "none";
+    turn++;
+    sendPromotion(currX, currY, newX, newY, pieceColor + " Rook");
+  });
+  document.querySelector("#bishop-btn").addEventListener("click", () => {
+    board[newX][newY].piece = new Bishop(pieceColor === "white");
+    promoteDiv.style.display = "none";
+    turn++;
+    sendPromotion(currX, currY, newX, newY, pieceColor + " Bishop");
+  });
 }
 
 // checks if making this move will cause king to be in danger

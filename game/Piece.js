@@ -14,6 +14,5 @@ class Piece {
         board[currX][currY].piece = null;
         board[newX][newY].piece = this;
         this.hasMoved = true;
-        return true;
     }
 }
